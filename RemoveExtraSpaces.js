@@ -17,31 +17,20 @@ var cleaned = cleanSpacedLetters(input); */
 
 
 function cleanSpacedText(input) {
-  // Step 1: Replace multiple spaces with a single space
-  let normalized = input.replace(/\s+/g, ' ');
+  // Step 1: Split the string by 2 or more spaces (word boundaries)
+  var rawWords = input.trim().split(/\s{2,}/);
 
-  // Step 2: Split into words based on single space
-  let words = normalized.trim().split(' ');
-
-  // Step 3: Join letters in each word and then join words with a space
-  let cleaned = [];
-  let currentWord = '';
-
-  for (let i = 0; i < words.length; i++) {
-    currentWord += words[i];
-    // If next word starts with a capital letter and current word ends with one, it's likely a new word
-    if (i === words.length - 1 || words[i + 1].length === 1) {
-      cleaned.push(currentWord);
-      currentWord = '';
-    } else {
-      currentWord += ' ';
-    }
+  // Step 2: Remove spaces within each word
+  var cleanedWords = [];
+  for (var i = 0; i < rawWords.length; i++) {
+    cleanedWords.push(rawWords[i].replace(/\s/g, ''));
   }
 
-  return cleaned.join(' ');
+  // Step 3: Join the cleaned words with a single space
+  return cleanedWords.join(' ');
 }
 
 // Example usage
-let messyText = "M O N T H L Y   C A R D H O L D E R   I N T E R C H A N G E   I N F O R M A T I O N";
+var messyText = "M O N T H L Y   C A R D H O L D E R   I N T E R C H A N G E   I N F O R M A T I O N";
 console.log(cleanSpacedText(messyText));
 // Output: "MONTHLY CARDHOLDER INTERCHANGE INFORMATION"
